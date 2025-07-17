@@ -1,0 +1,1 @@
+# store_server_jango
