@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Django: Run Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["runserver", "--noreload"],
+            "django": true,
+            "justMyCode": false,  // Отладка библиотек (как в PyCharm)
+            "autoReload": {
+                "enable": false  // Отключаем autoreload для стабильной отладки
+            }
+        },
+        {
+            "name": "Django: Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": ["test"],
+            "django": true
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}
