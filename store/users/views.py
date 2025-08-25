@@ -2,9 +2,8 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 
-
-from users.models import User
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from products.models import Basket
 
 
 # Create your views here.
@@ -45,7 +44,21 @@ def profile(request):
             return HttpResponseRedirect(reverse("users:profile"))
     else:
         form = UserProfileForm(instance=request.user)
-    context = {"title": "Store - профиль", "form": form}
+
+    baskets = Basket.objects.filter(user=request.user)
+    total_sum = 0
+    total_quantity = 0
+    for basket in baskets:
+        total_sum += basket.sum()
+        total_quantity += basket.quantity
+
+    context = {
+        "title": "Store - профиль",
+        "form": form,
+        "baskets": baskets,
+        "total_sum": total_sum,
+        "total_quantity": total_quantity,
+    }
     return render(request, "users/profile.html", context)
 
 def logout(request):
