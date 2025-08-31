@@ -1,3 +1,5 @@
+from itertools import product
+
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from products.models import ProductCategory, Product, Basket
@@ -12,11 +14,15 @@ def index(request):
     return render(request, "products/index.html", context)
 
 
-def products(request):
+def products(request, category_id=None):
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
     context = {
         "title": "Store - Каталог",
-        "products": Product.objects.all(),
         "categories": ProductCategory.objects.all(),
+        "products": products,
     }
     return render(request, "products/products.html", context)
 
