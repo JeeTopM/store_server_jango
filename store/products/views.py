@@ -36,22 +36,6 @@ class ProductsListView(ListView):
         return context
 
 
-# def products(request, category_id=None, page_number=1):
-#     if category_id:
-#         products = Product.objects.filter(category_id=category_id)
-#     else:
-#         products = Product.objects.all()
-#     per_page = 3
-#     paginator = Paginator(products, per_page)
-#     products_paginator = paginator.page(page_number)
-#
-#     context = {
-#         "title": "Store - Каталог",
-#         "categories": ProductCategory.objects.all(),
-#         "products": products_paginator,
-#     }
-#     return render(request, "products/products.html", context)
-
 @login_required
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
