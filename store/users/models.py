@@ -7,6 +7,9 @@ from django.urls import reverse
 from django.conf import settings
 from django.utils.timezone import now
 
+from store.settings import EMAIL_HOST_USER
+
+
 # Create your models here.
 class User(AbstractUser):
     image = models.ImageField(upload_to='users_images', null=True, blank=True)
@@ -22,17 +25,17 @@ class EmailVerification(models.Model):
         return f'EmailVerification object for {self.user.email}'
 
     def send_verification_email(self):
-        link = reverse('users:email-verification', kwargs={'email':self.user.email ,'code': self.code})
+        link = reverse('users:email_verification', kwargs={'email': self.user.email, 'code': self.code})
         verification_link = f'{settings.DOMAIN_NAME}{link}'
         subject = f'Подтверждение учетной записи для {self.user.username}'
         message = 'Для подтверждения учетной записи для {} перейдите по ссылке: {}'.format(
-            self.user.email, verification_link
+            self.user.email,
+            verification_link
         )
-
         send_mail(
             subject=subject,
             message=message,
-            from_email="from@example.com",
+            from_email=settings.EMAIL_HOST_USER,
             recipient_list=[self.user.email],
             fail_silently=False,
         )
