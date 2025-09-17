@@ -1,0 +1,8 @@
+[flake8]
+
+exclude =
+    migrations,
+    ./.venv,
+    ./venv_store
+
+max-line-length = 120

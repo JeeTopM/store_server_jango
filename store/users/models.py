@@ -1,19 +1,16 @@
-from pyexpat.errors import messages
-
-from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
+from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.utils.timezone import now
-
-from store.settings import EMAIL_HOST_USER
 
 
 # Create your models here.
 class User(AbstractUser):
     image = models.ImageField(upload_to='users_images', null=True, blank=True)
     is_verified_email = models.BooleanField(default=False)
+
 
 class EmailVerification(models.Model):
     code = models.UUIDField(unique=True)

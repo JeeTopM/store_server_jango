@@ -1,13 +1,14 @@
 from itertools import product
 
-from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from products.models import ProductCategory, Product, Basket
+from django.shortcuts import HttpResponseRedirect, render
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from users.models import User
+
 from common.views import TitleMixin
+from products.models import Basket, Product, ProductCategory
+from users.models import User
 
 
 # Create your views here.
@@ -16,12 +17,11 @@ class IndexView(TitleMixin, TemplateView):
     title = 'Store'
 
 
-class ProductsListView(TitleMixin ,ListView):
+class ProductsListView(TitleMixin, ListView):
     model = Product
     template_name = 'products/products.html'
     paginate_by = 3
     title = 'Store - Каталог'
-
 
     def get_queryset(self):
         queryset = super(ProductsListView, self).get_queryset()
