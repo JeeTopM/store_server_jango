@@ -18,7 +18,7 @@ class UserLoginView(LoginView):
     title = 'Store - авторизация'
 
 
-class UserRegistrationView(TitleMixin ,SuccessMessageMixin, CreateView):
+class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     model = User
     template_name = "users/registration.html"
     form_class = UserRegistrationForm
@@ -27,22 +27,17 @@ class UserRegistrationView(TitleMixin ,SuccessMessageMixin, CreateView):
     title = 'Store - Регистрация'
 
 
-class UserProfileView(TitleMixin ,UpdateView):
+class UserProfileView(TitleMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = "users/profile.html"
     title = 'Store - Личный кабинет'
 
-
     def get_success_url(self):
         return reverse_lazy("users:profile", args=(self.object.id,))
 
-    def get_context_data(self, **kwargs):
-        context = super(UserProfileView, self).get_context_data(**kwargs)
-        context['baskets'] = Basket.objects.filter(user=self.object)
-        return context
 
-class EmailVerificationView(TitleMixin ,TemplateView):
+class EmailVerificationView(TitleMixin, TemplateView):
     title = 'Store - Подтверждение электронной почты'
     template_name = 'users/email_verification.html'
 
